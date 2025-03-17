@@ -1,8 +1,12 @@
-import { Types } from 'mongoose';
+import { ObjectId } from 'mongoose';
 
 type TCancellation = {
-  petitionId: Types.ObjectId;
+  petitionId: ObjectId;
   cancellationText: string;
 }
 
-export type {TCancellation}
+type TCancellationUpdateQueryDto = Partial<TCancellation>
+type TCancellationUpdateDto = Partial<TCancellation>
+type TCancellationUpdateByIdDto = Partial<TCancellation>
+
+export type { TCancellation, TCancellationUpdateQueryDto, TCancellationUpdateDto, TCancellationUpdateByIdDto }

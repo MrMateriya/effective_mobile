@@ -11,6 +11,7 @@ import {
 import { PetitionService } from './petition.service';
 import { DatabaseMongooseIdDto } from '../database/dto';
 import {
+  PetitionCancelAllDto,
   PetitionCancelDto,
   PetitionCompleteDto,
   PetitionCreateDto,
@@ -76,7 +77,7 @@ export class PetitionController {
   }
 
   @Post('/cancel-all-in-work')
-  async cancelAllInWork() {
-    return await this.petitionService.cancelAllInWork();
+  async cancelAllInWork(@Body() petitionCancelAllDto: PetitionCancelAllDto) {
+    return await this.petitionService.cancelAllInWork(petitionCancelAllDto);
   }
 }

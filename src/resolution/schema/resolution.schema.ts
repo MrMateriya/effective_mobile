@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { TResolution } from '../types/resolution.types';
-import { Types, SchemaTypes } from 'mongoose';
+import { ObjectId, SchemaTypes } from 'mongoose';
 import { Petition } from '../../petition/schema/petition.schema';
 
 @Schema({ timestamps: true })
@@ -10,7 +10,7 @@ class Resolution implements TResolution {
     type: SchemaTypes.ObjectId,
     ref: Petition.name
   })
-  petitionId: Types.ObjectId;
+  petitionId: ObjectId;
 
   @Prop({
     required: true,

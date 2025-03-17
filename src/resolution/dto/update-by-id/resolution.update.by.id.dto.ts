@@ -1,9 +1,9 @@
+import { TResolutionUpdateByIdDto } from '../../types/resolution.types';
 import { IsMongoId, IsNotEmpty, IsString, MaxLength, ValidateIf } from 'class-validator';
-import { ObjectId } from 'mongoose';
-import { TResolutionUpdateQueryDto } from '../../types/resolution.types';
 import { AllowNull } from '../../../decorators/validation';
+import { ObjectId } from 'mongoose';
 
-class ResolutionUpdateQueryDto implements TResolutionUpdateQueryDto {
+class ResolutionUpdateByIdDto implements TResolutionUpdateByIdDto {
   @ValidateIf((_, value) => value !== undefined)
   @AllowNull(false)
   @IsNotEmpty()
@@ -18,4 +18,4 @@ class ResolutionUpdateQueryDto implements TResolutionUpdateQueryDto {
   resolutionText?: string;
 }
 
-export {ResolutionUpdateQueryDto}
+export { ResolutionUpdateByIdDto }

@@ -1,14 +1,17 @@
-import { IsDate, IsOptional } from 'class-validator';
+import { IsDate, ValidateIf } from 'class-validator';
 import { Type } from 'class-transformer';
 import { TPetitionGetAllQueryDto } from '../../types/petition.types';
+import { AllowNull } from '../../../decorators/validation';
 
 class PetitionGetAllQueryDto implements TPetitionGetAllQueryDto {
-  @IsOptional()
+  @ValidateIf((_, value) => value !== undefined)
+  @AllowNull(false)
   @Type(() => Date)
   @IsDate()
   start?: string;
 
-  @IsOptional()
+  @ValidateIf((_, value) => value !== undefined)
+  @AllowNull(false)
   @Type(() => Date)
   @IsDate()
   end?: string;

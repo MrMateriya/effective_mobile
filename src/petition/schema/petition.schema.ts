@@ -12,15 +12,15 @@ class Petition implements TPetition {
 
   @Prop({
     type: String,
-    default: '',
     maxlength: 255,
+    default: '',
   })
   description: string;
 
   @Prop({
     type: String,
-    default: '',
     maxlength: 255,
+    default: '',
   })
   subject: string;
 

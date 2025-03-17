@@ -1,8 +1,11 @@
-import { Types } from 'mongoose';
+import { ObjectId } from 'mongoose';
 
 type TResolution = {
-  petitionId: Types.ObjectId,
+  petitionId: ObjectId,
   resolutionText: string;
 }
+type TResolutionUpdateQueryDto = Partial<TResolution>
+type TResolutionUpdateDto = Partial<TResolution>
+type TResolutionUpdateByIdDto = Partial<TResolution>
 
-export type { TResolution }
+export type { TResolution, TResolutionUpdateQueryDto, TResolutionUpdateDto, TResolutionUpdateByIdDto };

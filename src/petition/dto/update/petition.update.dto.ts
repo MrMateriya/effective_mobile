@@ -1,19 +1,23 @@
-import { IsString, IsOptional, MaxLength, IsIn } from 'class-validator';
+import { IsString, MaxLength, IsIn, ValidateIf } from 'class-validator';
 import { PetitionStatuses, TPetitionStatuses, TPetitionUpdateDto } from '../../types/petition.types';
+import { AllowNull } from '../../../decorators/validation';
 
 class PetitionUpdateDto implements TPetitionUpdateDto {
-  @IsOptional()
+  @ValidateIf((_, value) => value !== undefined)
+  @AllowNull(false)
   @IsIn(Object.values(PetitionStatuses))
   @IsString()
   @MaxLength(255)
   status?: TPetitionStatuses;
 
-  @IsOptional()
+  @ValidateIf((_, value) => value !== undefined)
+  @AllowNull(false)
   @IsString()
   @MaxLength(255)
   description?: string;
 
-  @IsOptional()
+  @ValidateIf((_, value) => value !== undefined)
+  @AllowNull(false)
   @IsString()
   @MaxLength(255)
   subject?: string;

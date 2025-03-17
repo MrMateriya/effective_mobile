@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { DatabaseMongooseIdDto } from './dto/mongoose-id-dto/database.mongoose.id.dto';
+import { DatabaseMongooseIdDto } from './dto';
 
 @Module({
   imports: [DatabaseMongooseIdDto],

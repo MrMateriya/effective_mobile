@@ -8,6 +8,7 @@ import { PetitionModule } from './petition/petition.module';
 import { DatabaseModule } from './database/database.module';
 import { ResolutionModule } from './resolution/resolution.module';
 import { CancellationModule } from './cancellation/cancellation.module';
+import { Petition, PetitionSchema } from './petition/schema/petition.schema';
 
 @Module({
   imports: [

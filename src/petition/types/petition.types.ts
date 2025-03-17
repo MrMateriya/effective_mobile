@@ -14,22 +14,24 @@ type TPetition = {
   description: string,
   subject: string,
 }
-
-/* dto */
-type TPetitionGetAllQueryDto = {
-  start?: string,
-  end?: string,
-}
-type TPetitionCreateDto = Omit<TPetition, "status">
-type TPetitionUpdateByIdDto = Partial<TPetition>
-type TPetitionUpdateDto = Partial<TPetition>
-type TPetitionUpdateQueryDto = Partial<TPetition>
 type TPetitionCompleteDto = {
   resolutionText: string
 }
 type TPetitionCancelDto = {
   cancellationText: string
 }
+
+/* dto */
+type TPetitionGetAllQueryDto = {
+  start?: string,
+  end?: string,
+}
+
+type TPetitionCreateDto = Omit<TPetition, "status">
+type TPetitionUpdateByIdDto = Partial<TPetition>
+type TPetitionUpdateDto = Partial<TPetition>
+type TPetitionUpdateQueryDto = Partial<TPetition>
+type TPetitionCancelAllDto = TPetitionCancelDto
 
 export { PetitionStatuses }
 export type {
@@ -42,4 +44,5 @@ export type {
   TPetitionUpdateQueryDto,
   TPetitionCompleteDto,
   TPetitionCancelDto,
+  TPetitionCancelAllDto,
 }

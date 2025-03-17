@@ -1,9 +1,9 @@
 import { IsMongoId, IsNotEmpty, IsString, MaxLength, ValidateIf } from 'class-validator';
-import { ObjectId } from 'mongoose';
-import { TResolutionUpdateQueryDto } from '../../types/resolution.types';
 import { AllowNull } from '../../../decorators/validation';
+import { ObjectId } from 'mongoose';
+import { TCancellationUpdateByIdDto } from '../../types/cancellation.types';
 
-class ResolutionUpdateQueryDto implements TResolutionUpdateQueryDto {
+class CancellationUpdateByIdDto implements TCancellationUpdateByIdDto {
   @ValidateIf((_, value) => value !== undefined)
   @AllowNull(false)
   @IsNotEmpty()
@@ -15,7 +15,7 @@ class ResolutionUpdateQueryDto implements TResolutionUpdateQueryDto {
   @IsNotEmpty()
   @IsString()
   @MaxLength(255)
-  resolutionText?: string;
+  cancellationText?: string;
 }
 
-export {ResolutionUpdateQueryDto}
+export {CancellationUpdateByIdDto}

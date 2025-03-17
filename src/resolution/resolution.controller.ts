@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { ResolutionService } from './resolution.service';
-import { ResolutionCreateDto, ResolutionUpdateDto, ResolutionUpdateQueryDto } from './dto';
+import { ResolutionCreateDto, ResolutionUpdateByIdDto, ResolutionUpdateDto, ResolutionUpdateQueryDto } from './dto';
 import { DatabaseMongooseIdDto } from '../database/dto';
 
 @Controller('resolution')
@@ -27,6 +27,12 @@ export class ResolutionController {
   async update(@Query() resolutionUpdateQueryDto: ResolutionUpdateQueryDto,
                @Body() resolutionUpdateDto: ResolutionUpdateDto) {
     return this.resolutionService.update(resolutionUpdateQueryDto, resolutionUpdateDto);
+  }
+
+  @Patch(':id')
+  async updateById(@Param() databaseMongooseIdDto: DatabaseMongooseIdDto,
+                   @Body() resolutionUpdateByIdDto: ResolutionUpdateByIdDto) {
+    return this.resolutionService.updateById(databaseMongooseIdDto, resolutionUpdateByIdDto);
   }
 
   @Delete(':id')

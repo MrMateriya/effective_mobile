@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { TCancellation } from '../types/cancellation.types';
-import { SchemaTypes, Types } from 'mongoose';
+import { SchemaTypes, ObjectId } from 'mongoose';
 import { Petition } from '../../petition/schema/petition.schema';
 
 @Schema({ timestamps: true })
@@ -10,7 +10,7 @@ class Cancellation implements TCancellation {
     type: SchemaTypes.ObjectId,
     ref: Petition.name,
   })
-  petitionId: Types.ObjectId;
+  petitionId: ObjectId;
 
   @Prop({
     required: true,

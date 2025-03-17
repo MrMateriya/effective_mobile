@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ResolutionCreateDto, ResolutionUpdateDto, ResolutionUpdateQueryDto } from './dto';
+import { ResolutionCreateDto, ResolutionUpdateByIdDto, ResolutionUpdateDto, ResolutionUpdateQueryDto } from './dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Resolution } from './schema/resolution.schema';
 import { Model } from 'mongoose';
@@ -8,7 +8,7 @@ import { DatabaseMongooseIdDto } from '../database/dto';
 @Injectable()
 export class ResolutionService {
   constructor(
-    @InjectModel(Resolution.name) private readonly resolutionModel: Model<Resolution>
+    @InjectModel(Resolution.name) private readonly resolutionModel: Model<Resolution>,
   ) {}
 
   async create(resolutionCreateDto: ResolutionCreateDto) {
@@ -28,15 +28,33 @@ export class ResolutionService {
 
   async update(resolutionUpdateQueryDto: ResolutionUpdateQueryDto,
                resolutionUpdateDto: ResolutionUpdateDto) {
+    const { resolutionText, petitionId } = resolutionUpdateQueryDto
     return await this.resolutionModel
-      .updateMany(resolutionUpdateQueryDto, resolutionUpdateDto, { new: true })
+      .updateMany({
+        $and: [
+          resolutionText ? { resolutionText } : {},
+          petitionId ? { petitionId } : {},
+        ],
+      }, resolutionUpdateDto, { new: true })
       .exec()
+  }
+
+  async updateById(databaseMongooseIdDto: DatabaseMongooseIdDto,
+                   resolutionUpdateByIdDto: ResolutionUpdateByIdDto) {
+    const { id } = databaseMongooseIdDto;
+    const resolution = await this.resolutionModel
+      .findByIdAndUpdate(id, resolutionUpdateByIdDto, { new: true })
+      .exec();
+    if (!resolution) throw new NotFoundException('Resolution not found');
+    return resolution;
   }
 
   async deleteById(databaseMongooseIdDto: DatabaseMongooseIdDto) {
     const { id } = databaseMongooseIdDto
-    return await this.resolutionModel
-      .deleteOne({ _id: id })
-      .exec()
+    const resolution = await this.resolutionModel
+      .findByIdAndDelete(id)
+      .exec();
+    if (!resolution) throw new NotFoundException('Resolution not found');
+    return resolution;
   }
 }

@@ -1,5 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CancellationCreateDto, CancellationUpdateDto, CancellationUpdateQueryDto } from './dto';
+import {
+  CancellationCreateDto,
+  CancellationUpdateByIdDto,
+  CancellationUpdateDto,
+  CancellationUpdateQueryDto,
+} from './dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Cancellation } from './schema/cancellation.schema';
 import { Model } from 'mongoose';
@@ -29,15 +34,33 @@ export class CancellationService {
 
   async update(cancellationUpdateQueryDto: CancellationUpdateQueryDto,
                cancellationUpdateDto: CancellationUpdateDto) {
+    const { cancellationText, petitionId } = cancellationUpdateQueryDto
     return await this.cancellationModel
-      .updateMany(cancellationUpdateQueryDto, cancellationUpdateDto, { new: true })
+      .updateMany({
+        $and: [
+          cancellationText ? { cancellationText } : {},
+          petitionId ? { petitionId } : {},
+        ],
+      }, cancellationUpdateDto, { new: true })
       .exec()
+  }
+
+  async updateById(databaseMongooseIdDto: DatabaseMongooseIdDto,
+                   cancellationUpdateByIdDto: CancellationUpdateByIdDto) {
+    const { id } = databaseMongooseIdDto;
+    const cancellation = await this.cancellationModel
+      .findByIdAndUpdate(id, cancellationUpdateByIdDto, { new: true })
+      .exec();
+    if (!cancellation) throw new NotFoundException('Cancellation not found');
+    return cancellation;
   }
 
   async deleteById(databaseMongooseIdDto: DatabaseMongooseIdDto) {
     const { id } = databaseMongooseIdDto
-    return await this.cancellationModel
-      .deleteOne({ _id: id })
-      .exec()
+    const cancellation = await this.cancellationModel
+      .findByIdAndDelete(id)
+      .exec();
+    if (!cancellation) throw new NotFoundException('Cancellation not found');
+    return cancellation;
   }
 }
